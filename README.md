@@ -1,7 +1,7 @@
 # Template for Hindley-Milner based languages
 
-[![Hackage](https://img.shields.io/hackage/v/mondo.svg?style=flat)](https://hackage.haskell.org/package/hindley-milner)
-[![Build Status](https://travis-ci.org/mbg/mondo.svg?branch=master)](https://travis-ci.org/mbg/hindley-milner)
+[![Hackage](https://img.shields.io/hackage/v/hindley-milner.svg?style=flat)](https://hackage.haskell.org/package/hindley-milner)
+[![Build Status](https://travis-ci.org/mbg/hindley-milner.svg?branch=master)](https://travis-ci.org/mbg/hindley-milner)
 
 ## Introduction
 
