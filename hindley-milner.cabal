@@ -16,13 +16,15 @@ version:                0.1.0.0
 synopsis:               Template for Hindley-Milner based languages
 
 -- A longer description of the package.
--- description:
+description:
+    This package contains an implemention of Hindley-Milner and Algorithm W as
+    a starting point for derived languages.
 
 -- The license under which the package is released.
--- license:
+license: MIT
 
 -- The file containing the license text.
-license-file:           LICENSE
+-- license-file:           LICENSE
 
 -- The package author(s).
 author:                 Michael B. Gale
