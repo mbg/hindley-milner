@@ -9,6 +9,7 @@ import Data.Fix
 import qualified Data.Map as M
 
 import Language.HM.Type
+import Language.HM.Term
 
 --------------------------------------------------------------------------------
 
@@ -37,6 +38,14 @@ instance CanApply Sigma where
             g :: SigmaF Sigma -> Sigma
             g (MonoT t) = monoT (apply s t)
             g (ForAllT x t) = forAllT x (apply (M.delete x s) t)
+
+instance CanApply t => CanApply (Typed t a) where
+    apply s (Typed x t) = Typed x (apply s t)
+
+instance CanApply TyTerm where
+    apply s = cata g
+        where
+            g (TypedF t) = Fix $ TypedF (apply s t)
 
 -- | @s1@ '<@>' @s2@ applies @s1@ to @s2@.
 (<@>) :: Theta -> Theta -> Theta

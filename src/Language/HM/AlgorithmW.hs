@@ -27,8 +27,10 @@ import Language.HM.TypeError
 
 --------------------------------------------------------------------------------
 
+-- | Typing contexts.
 type Context = M.Map Var Sigma
 
+-- | 'empty' is the empty typing context.
 empty :: Context
 empty = M.empty
 
@@ -79,6 +81,9 @@ gen' ctx t = S.foldr forAllT (monoT t) vs
         cs = S.unions $ map tyVars $ M.elems ctx
         vs = tyVars t `S.difference` cs
 
+-- | 'genInOrder' @ctx t@ generalises a monomorphic type @t@ to a polymorphic
+-- type in a context @ctx@. This variant of 'gen' ensures that the order of
+-- quantifiers matches that in which type variables occur in @t@.
 genInOrder :: Context -> Tau -> Sigma
 genInOrder ctx t = foldr forAllT (monoT t) vs
     where
@@ -140,7 +145,7 @@ unify t0 t1 = go (unFix t0) (unFix t1)
 
 -- | 'infer' @term@ reconstructs types in @term@.
 infer :: Term -> W TyTerm
-infer term = (\(_,_,term) -> term) `fmap` cata go term
+infer term = (\(s,_,e) -> apply s e) `fmap` cata go term
     where
         go :: TermF Var (W (Theta, Tau, TyTerm)) -> W (Theta, Tau, TyTerm)
         go (Var x) = do

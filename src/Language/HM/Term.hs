@@ -19,7 +19,7 @@ data TermF v r
     | App r r               -- ^ Applications.
     | Abs v r               -- ^ Abstractions.
     | Let v r r             -- ^ Let bindings.
-    deriving (Functor, Foldable, Traversable)
+    deriving (Show, Functor, Foldable, Traversable)
 
 -- | The type of terms.
 type Term = Fix (TermF Var)
@@ -43,16 +43,21 @@ letE x e0 e1 = Fix $ Let x e0 e1
 --------------------------------------------------------------------------------
 
 -- | Things with type annotations.
-data Typed a t
+data Typed t a
     = Typed { untype :: a, tyAnn :: t }
+    deriving (Show, Functor)
 
 -- | Typed term variables.
-type TyVar = Typed Var Sigma
+type TyVar = Typed Sigma Var
 
-newtype TypedF f t r = TypedF { unTypedF :: Typed (f r) t }
+newtype TypedF t f r = TypedF { unTypedF :: Typed t (f r) }
+    deriving Show
+
+instance Functor f => Functor (TypedF t f) where
+    fmap f (TypedF t) = TypedF (fmap (fmap f) t)
 
 -- | Typed terms.
-type TyTerm = Fix (TypedF (TermF TyVar) Tau)
+type TyTerm = Fix (TypedF Tau (TermF TyVar))
 
 -- | 'tyVarE' @x t@ constructs a variable whose name is @x@ and whose type is
 -- @t@.
