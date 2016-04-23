@@ -91,6 +91,10 @@ test-suite spec
 
   main-is:              Spec.hs
 
+  other-modules:
+    Language.HM.AlgorithmWSpec,
+    Language.HM.TypeSpec
+
   build-depends:
     base >=4.8 && <4.9,
     hindley-milner,
