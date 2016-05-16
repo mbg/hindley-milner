@@ -1,0 +1,5 @@
+resolver: lts-5.17
+packages:
+- .
+extra-deps:
+- data-fix-0.0.3
