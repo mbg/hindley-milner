@@ -1,0 +1,47 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/build.yml'
+      - "src/**"
+      - "*.cabal"
+      - "stack*.yaml"
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Install Haskell
+        uses: haskell/actions/setup@v1
+        with:
+          ghc-version: "8.10.7"
+          enable-stack: true
+          stack-version: "latest"
+
+      - name: Cache .stack
+        uses: actions/cache@v2
+        with:
+          path: ~/.stack
+          key: ${{ runner.os }}-${{ hashFiles('stack.yaml') }}
+          restore-keys: ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          stack --no-terminal build --only-dependencies --test --fast --system-ghc
+
+      - name: Build and install
+        run: |
+          stack --no-terminal build --test --fast --system-ghc --no-run-tests
+
+      - name: Run tests
+        run: |
+          stack --no-terminal build --test --fast --system-ghc
+
