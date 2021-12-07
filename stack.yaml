@@ -1,5 +1,5 @@
-resolver: lts-5.17
+resolver:
+  url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/18.yaml
+
 packages:
 - .
-extra-deps:
-- data-fix-0.0.3

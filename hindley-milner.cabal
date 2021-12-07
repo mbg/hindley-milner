@@ -31,7 +31,7 @@ author:                 Michael B. Gale
 
 -- An email address to which users can send suggestions, bug reports, and
 -- patches.
-maintainer:             michael.gale@cl.cam.ac.uk
+maintainer:             github@michael-gale.co.uk
 
 -- A copyright notice.
 -- copyright:
@@ -69,7 +69,7 @@ library
 
   -- Other library packages from which modules are imported.
   build-depends:
-    base >=4.8 && <4.9,
+    base >=4.8 && <5,
     containers >=0.5,
     data-fix,
     mtl,
@@ -98,7 +98,7 @@ test-suite spec
     Language.HM.TypeSpec
 
   build-depends:
-    base >=4.8 && <4.9,
+    base >=4.8 && <5,
     hindley-milner,
     hspec,
     containers >= 0.5

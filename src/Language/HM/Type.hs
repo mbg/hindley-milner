@@ -22,6 +22,7 @@ module Language.HM.Type (
 --------------------------------------------------------------------------------
 
 import Data.Fix
+import Data.Functor.Classes
 import qualified Data.List as L
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -34,6 +35,15 @@ data TauF r
     = VarT String
     | ArrowT r r
     deriving (Eq, Show, Functor)
+
+instance Eq1 TauF where
+    liftEq eq (VarT xs) (VarT ys) = xs == ys
+    liftEq eq (ArrowT a0 b0) (ArrowT a1 b1) = a0 `eq` a1 && b0 `eq` b1
+    liftEq _ _ _ = False
+
+instance Show1 TauF where
+    liftShowsPrec sp _ d (VarT xs) = showsUnaryWith showsPrec "VarT" d xs
+    liftShowsPrec sp _ d (ArrowT a b) = showsBinaryWith sp sp "ArrowT" d a b
 
 -- | Monomorphic types.
 type Tau = Fix TauF
